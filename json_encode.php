@@ -1,6 +1,6 @@
 <?php
 
-function _a2j($a, $indent = 1)
+function json_encode($a, $indent = 1)
 {
 	$j = array();
 
@@ -9,7 +9,7 @@ function _a2j($a, $indent = 1)
 		foreach ($a as $k => $v) {
 			if (is_array($v)) {
 				$v_ = $v;
-				$v  = _a2j($v_, $indent + 1);
+				$v  = json_encode($v_, $indent + 1);
 				$v  = "[" .
 				      substr(trim($v), 1, -1) . "]";
 			} else $v = "\"$v\"";
@@ -32,13 +32,13 @@ function _keys_are_int($a)
 	return true;
 }
 
-function _o2a($o)
+function object2array($o)
 {
 	if (is_object($o)) $o = (array) $o;
 	if (is_array($o)) {
 		$new = array();
 		foreach ($o as $k => $v) {
-			$new[$k] = _o2a($v);
+			$new[$k] = object2array($v);
 		}
 	} else $new = $o;
 
@@ -49,7 +49,7 @@ function _implode($a)
 {
 	$s = "";
 	foreach ($a as $k => $v) {
-		if (is_array($v)) $s .= _a2j($v) . "," . CR_LF;
+		if (is_array($v)) $s .= json_encode($v) . "," . CR_LF;
 		else $s .= "\"" . $v . "\"," . CR_LF;
 	}
 
