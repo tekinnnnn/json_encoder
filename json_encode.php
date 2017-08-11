@@ -1,3 +1,5 @@
+<?php
+
 function _a2j($a, $indent = 1)
 {
 	$j = array();
